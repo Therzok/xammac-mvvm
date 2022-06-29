@@ -2,29 +2,30 @@ using ObjCRuntime;
 
 namespace xammacmvvm;
 
-public partial class ViewController : NSViewController {
+public partial class ViewController : NSViewController
+{
     ViewModel _model;
-	ObservableNSObject _vm;
-	NSTextField _label;
+    ObservableNSObject _vm;
+    NSTextField _label;
 
-	protected ViewController (NativeHandle handle) : base (handle)
+    protected ViewController(NativeHandle handle) : base(handle)
     {
         _model = new ViewModel();
         _vm = UniqueAssociation.Instance.GetOrCreate<ObservableNSObject>(_model);
 
     }
 
-    public override void ViewDidLoad ()
-	{
-		base.ViewDidLoad ();
+    public override void ViewDidLoad()
+    {
+        base.ViewDidLoad();
 
         _label = NSTextField.CreateLabel("Initial");
         View = _label;
 
         _ = LoopUpdateLabel();
 
-		// Do any additional setup after loading the view.
-	}
+        // Do any additional setup after loading the view.
+    }
 
     async Task LoopUpdateLabel()
     {
@@ -50,12 +51,14 @@ public partial class ViewController : NSViewController {
         base.ViewDidDisappear();
     }
 
-    public override NSObject RepresentedObject {
-		get => base.RepresentedObject;
-		set {
-			base.RepresentedObject = value;
+    public override NSObject RepresentedObject
+    {
+        get => base.RepresentedObject;
+        set
+        {
+            base.RepresentedObject = value;
 
-			// Update the view, if already loaded.
-		}
-	}
+            // Update the view, if already loaded.
+        }
+    }
 }
